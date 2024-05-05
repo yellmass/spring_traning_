@@ -10,11 +10,11 @@ import lombok.NoArgsConstructor;
 @Table(name = "user_account")
 public class User extends BaseEntity{
 
-    private String email;
-    private String password;
-    private String username;
-
     @OneToOne
     @PrimaryKeyJoinColumn(name = "account_details_id")
     private Account account;
+
+    private String email;
+    private String password;
+    private String username;
 }
