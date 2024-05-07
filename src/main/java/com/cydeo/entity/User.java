@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 public class User extends BaseEntity{
 
     @OneToOne
-    @PrimaryKeyJoinColumn(name = "account_details_id")
+    @JoinColumn(name = "account_details_id")
     private Account account;
 
     private String email;

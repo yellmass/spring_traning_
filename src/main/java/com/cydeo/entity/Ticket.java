@@ -15,6 +15,7 @@ public class Ticket extends BaseEntity{
     private MovieCinema movieCinema;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_account_id")
     private User user;
 
     @Column(columnDefinition = "TIMESTAMP")
