@@ -28,8 +28,8 @@ public class Movie extends BaseEntity{
     @Column(columnDefinition = "text")
     private String summary;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "MovieGenreRel",
+    @ManyToMany(fetch = FetchType.LAZY)  // lazy by default
+    @JoinTable(name = "movie_genre_rel",
     joinColumns = @JoinColumn(name = "movie_id"),
     inverseJoinColumns = @JoinColumn(name = "genre_id"))
     private List<Genre> genreList;
