@@ -42,11 +42,11 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
     // ------------------- Native QUERIES ------------------- //
 
     //Write a native query to count the number of tickets a user bought
-    @Query(value = "select * from ticket where user_account_id=?1",nativeQuery = true)
+    @Query(value = "select count(*) from ticket where user_account_id=?1",nativeQuery = true)
     Integer fetchCountByUserId(Long userId);
 
     //Write a native query to count the number of tickets a user bought in a specific range of dates
-    @Query(value = "select * from ticket where user_account_id=?1 and date_time between ?2 and ?3",nativeQuery = true)
+    @Query(value = "select count(*) from ticket where user_account_id=?1 and date_time between ?2 and ?3",nativeQuery = true)
     Integer fetchCountOfTicketsByUserIdAndDateRange(Long userId, LocalDateTime dateTime1,LocalDateTime dateTime2);
 
     //Write a native query to distinct all tickets by movie name  //select? by movie name
@@ -62,7 +62,7 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
     List<Ticket> retrieveAll();
 
     //Write a native query to list all tickets where a specific value should be containable in the username or account name or movie name
-    @Query(value = "select * from ticket t " +
+    @Query(value = "select t.* from ticket t " +
             "left join movie_cinema mc on t.movie_cinema_id=mc.id " +
             "left join movie m on mc.movie_id=m.id " +
             "left join user_account u on t.user_account_id=u.id " +
@@ -70,7 +70,7 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
             "where u.username ilike concat('%',?1,'%') " +
             "or a.name ilike concat('%',?1,'%') " +
             "or m.name ilike concat('%',?1,'%')",nativeQuery = true)
-    List<Ticket> retrieveAllUsernameOrAccountNameOrMovieNameLike(String pattern);
+    List<Ticket> retrieveAllByUsernameOrAccountNameOrMovieNameLike(String pattern);
 
 
 }
