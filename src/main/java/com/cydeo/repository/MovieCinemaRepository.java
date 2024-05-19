@@ -20,7 +20,7 @@ public interface MovieCinemaRepository extends JpaRepository<MovieCinema, Long> 
     //Write a derived query to read movie cinema with id
 
     @Override
-    Optional<MovieCinema> findById(Long aLong);  //alredy in CrudRepository interface
+    Optional<MovieCinema> findById(Long id);  //already in CrudRepository interface
 
 
     //Write a derived query to count all movie cinemas with a specific cinema id
@@ -33,6 +33,8 @@ public interface MovieCinemaRepository extends JpaRepository<MovieCinema, Long> 
     List<MovieCinema> findAllByDateTimeAfter(LocalDateTime dateTime);
 
     //Write a derived query to find the top 3 // movieCinemas that has the  most // expensive movies
+
+    List<MovieCinema> findTop3ByOrderByMovie_PriceDesc();
     @Query("select mc from MovieCinema mc left join Movie m on mc.movie.id=m.id order by m.price limit 3")
     List<MovieCinema> retrieveTop3CinemaMoviesWithMostExpensiveMovies();
 
@@ -51,10 +53,10 @@ public interface MovieCinemaRepository extends JpaRepository<MovieCinema, Long> 
     // ------------------- Native QUERIES ------------------- //
 
     //Write a native query to count all movie cinemas by cinema id
-    @Query(value = "select * from movie_cinema where cinema_id = ?1",nativeQuery = true)
+    @Query(value = "select count(*) from movie_cinema where cinema_id = ?1",nativeQuery = true)
     Integer fetchCountByCinemaId(Long cinemaId);
     //Write a native query that returns all movie cinemas by location name
-    @Query(value = "select * from movie_cinema mc left join cinema c on mc.cinema_id=c.id left join location l on c.location_id=l.id where l.name=?1",nativeQuery = true)
+    @Query(value = "select * from movie_cinema mc join cinema c on mc.cinema_id=c.id join location l on c.location_id=l.id where l.name=?1",nativeQuery = true)
     List<MovieCinema> retrieveAllByLocationName(String locationName);
 
 }

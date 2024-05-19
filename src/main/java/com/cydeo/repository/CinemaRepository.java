@@ -34,7 +34,7 @@ public interface CinemaRepository extends JpaRepository<Cinema, Long> {
     // ------------------- Native QUERIES ------------------- //
 
     //Write a native query to read all cinemas by location country
-    @Query(value = "select * from cinema c left join location l where l.country=?1",nativeQuery = true)
+    @Query(value = "select * from cinema c join location l where l.country=?1",nativeQuery = true)
     List<Cinema> fetchCinemasByCountry(String country);
     //Write a native query to read all cinemas by name or sponsored name contains a specific pattern
     @Query(value = "select * from cinema where name ilike concat('%',?1,'%') or sponsored_name ilike concat('%',?1,'%')",nativeQuery = true)
@@ -44,7 +44,7 @@ public interface CinemaRepository extends JpaRepository<Cinema, Long> {
     List<Cinema> sortAllCinemasByName();
 
     //Write a native query to distinct all cinemas by sponsored name
-    @Query(value = "select * from cinema group by sponsored_name",nativeQuery = true)
+    @Query(value = "select sponsored_name from cinema group by sponsored_name",nativeQuery = true)
     List<Cinema> fetchDistinctCinemasGroupBySponsoredName();
 
 }
